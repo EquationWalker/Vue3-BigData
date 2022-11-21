@@ -154,6 +154,7 @@ const setData = async () => {
 .center {
   display: flex;
   flex-direction: column;
+  min-width: 520px;
   .up {
     width: 100%;
     display: flex;

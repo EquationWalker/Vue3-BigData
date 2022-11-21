@@ -9,7 +9,7 @@
       </div>
       <div class="d-flex ai-center flex-column body-box">
         <dv-capsule-chart class="dv-cap-chart" :config="config" />
-        <chart />
+        <!-- <chart /> -->
       </div>
     </div>
   </div>
@@ -17,7 +17,7 @@
 
 <script lang="ts" setup>
 import {reactive} from 'vue'
-import Chart from "./chart/index";
+//import Chart from "./chart/index";
 
 const config = reactive({
   data: [
@@ -32,6 +32,30 @@ const config = reactive({
     {
       name: "漯河",
       value: 123,
+    },
+    {
+      name: "郑州",
+      value: 55,
+    },
+    {
+      name: "西峡",
+      value: 98,
+    },
+    {
+      name: "西峡",
+      value: 98,
+    },
+    {
+      name: "西峡",
+      value: 98,
+    },
+    {
+      name: "郑州",
+      value: 55,
+    },
+    {
+      name: "西峡",
+      value: 98,
     },
     {
       name: "郑州",
@@ -67,7 +91,7 @@ $box-width: 340px;
     overflow: hidden;
     .dv-cap-chart {
       width: 100%;
-      height: 160px;
+      height: 340px;
     }
   }
 }

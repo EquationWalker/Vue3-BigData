@@ -89,20 +89,20 @@ export default defineComponent({
             */
           },
           // 如果需要根据不同的数据展示深浅不一的颜色，则把这里打开
-          // visualMap: {
-          //   min: 0,
-          //   max: 10,
-          //   show: false,
-          //   seriesIndex: 0,
-          //   // 颜色
-          //   inRange: {
-          //     color: ['rgba(41,166,206, .5)', 'rgba(69,117,245, .9)'],
-          //   },
-          // },
+          visualMap: {
+            min: 0,
+            max: 200,
+            show: true,
+            seriesIndex: 0,
+            // 颜色
+            inRange: {
+              color: ['rgba(41,166,206, .5)', 'rgba(69,117,245, .9)'],
+            },
+          },
           // 底部背景
           geo: [{
             show: true,
-            aspectScale: 0.85, //长宽比
+            aspectScale: 1, //长宽比
             zoom: 1.16,
             bottom: '10%',
             left: '17%',
@@ -121,11 +121,11 @@ export default defineComponent({
             {
               name: '累计确诊人数',
               type: 'map',
-              aspectScale: 0.92, //长宽比
-              zoom: 1.16, //缩放
+              aspectScale: 1, //长宽比
+              zoom: 1.8, //缩放
               mapType: 'China', // 自定义扩展图表类型
-              bottom: '6%',
-              left: '6%',
+              bottom: '10%',
+              left: '26%',
               itemStyle: {
                 normal: {
                   // 背景渐变色
@@ -206,7 +206,7 @@ export default defineComponent({
     )
     return () => {
       const height = "360px"
-      const width = "330px"
+      const width = "550px"
 
       return <div>
         <echart options={options} height={height} width={width} />

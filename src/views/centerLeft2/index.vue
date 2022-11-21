@@ -23,7 +23,7 @@ import Chart from './chart/index'
 
 <style lang="scss" scoped>
 .centreLeft1 {
-  $box-width: 300px;
+  $box-width: 600px;  // 300
   $box-height: 410px;
   padding: 16px;
   height: $box-height;
@@ -44,7 +44,7 @@ import Chart from './chart/index'
   }
   .chart-box {
     margin-top: 16px;
-    width: 170px;
+    width: 170px; // 170
     height: 170px;
     .active-ring-name {
       padding-top: 10px;

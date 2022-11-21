@@ -4,34 +4,34 @@ import { ModuleInfo } from './index.d'
 export const WEEK = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
 
 // 主题名称与副标题名称
-export const title = '大数据可视化平台'
-export const subtitle = ['数据分析1', '数据分析2', 'vue-big-screen']
+export const title = '新冠疫情可视化大屏'
+export const subtitle = ['全国疫情', '山东省疫情', '排行榜']
 
 export const moduleInfo: ModuleInfo = [
   // 中间的几个模块
   {
-    name: '任务通过率',
+    name: '全国疫情数据',
     icon: 'icon-chart-bar',
   },
   {
-    name: '地图数据',
+    name: '山东疫情数据',
     icon: 'icon-tongji4',
   },
   {
-    name: '产品销售渠道分析',
+    name: '全国疫情总数据',
     icon: 'icon-align-left',
   },
   {
-    name: '任务完成排行榜',
+    name: '新增确诊排行榜',
     icon: 'icon-zhibiao2',
   },
   // 底部两个模块
   {
-    name: '数据统计图',
+    name: '治愈&确诊统计图',
     icon: 'icon-vector',
   },
   {
-    name: '工单修复以及满意度统计图',
+    name: '疫苗接种统计图',
     icon: 'icon-fenxi7',
   },
 ]

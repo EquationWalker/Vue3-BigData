@@ -63,7 +63,7 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 $box-height: 410px;
-$box-width: 300px;
+$box-width: 362px;  // 300
 .centerRight2 {
   padding: 16px;
   padding-top: 20px;
@@ -81,7 +81,7 @@ $box-width: 300px;
     border-radius: 10px;
     overflow: hidden;
     .dv-scr-board {
-      width: 270px;
+      width: 350px; // 270
       height: 340px;
     }
   }

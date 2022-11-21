@@ -67,9 +67,9 @@
               <center />
             </div>
             <!-- 中间 -->
-            <div>
+            <!-- <div>
               <center-right1 />
-            </div>
+            </div> -->
             <div>
               <dv-border-box-13>
                 <center-right2 />
