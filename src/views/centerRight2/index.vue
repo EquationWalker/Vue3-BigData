@@ -16,62 +16,49 @@
   </div>
 </template>
 
-<script>
-import { defineComponent, reactive , getCurrentInstance, onMounted} from 'vue'
+<script lang="ts" setup>
+import { reactive, getCurrentInstance, onMounted, onUnmounted } from "vue";
+const config = reactive({
+  header: ["省份", "总计", "新增"],
+  data: [],
+  //rowNum: 7, //表格行数
+  waitTime: 2000,
+  carousel: "page",
+  headerHeight: 35,
+  headerBGC: "#0f1325", //表头
+  oddRowBGC: "#0f1325", //奇数行
+  evenRowBGC: "#171c33", //偶数行
+  index: true,
+  columnWidth: [50],
+  align: ["center"],
+});
+const { proxy } = getCurrentInstance() as any
 
-
-export default defineComponent({
-  setup() {
-    let config = reactive({
-      header: ['省份', '新增', '增加率'],
-      data: [
-        // ['组件1', 'dev-1', "<span  class='colorGrass'>↑75%</span>"],
-        // ['组件2', 'dev-2', "<span  class='colorRed'>↓33%</span>"],
-        // ['组件3', 'dev-3', "<span  class='colorGrass'>↑100%</span>"],
-        // ['组件4', 'rea-1', "<span  class='colorGrass'>↑94%</span>"],
-        // ['组件5', 'rea-2', "<span  class='colorGrass'>↑95%</span>"],
-        // ['组件6', 'fix-2', "<span  class='colorGrass'>↑63%</span>"],
-        // ['组件7', 'fix-4', "<span  class='colorGrass'>↑84%</span>"],
-        // ['组件8', 'fix-7', "<span  class='colorRed'>↓46%</span>"],
-        // ['组件9', 'dev-2', "<span  class='colorRed'>↓13%</span>"],
-        // ['组件10', 'dev-9', "<span  class='colorGrass'>↑76%</span>"]
-      ],
-      rowNum: 7, //表格行数
-      headerHeight: 35,
-      headerBGC: '#0f1325', //表头
-      oddRowBGC: '#0f1325', //奇数行
-      evenRowBGC: '#171c33', //偶数行
-      index: true,
-      columnWidth: [50],
-      align: ['center']
-    });
-    const { proxy } = getCurrentInstance()
-    
-    const setData = async () => {
-      const {data } = await proxy.$http.get('/getCenterRight2')
-      let d_list = []
-      for (let i = 0;i < data.length; i++){
-        const provinceName = data[i][0]
-        const nowConfirm = data[i][1]['nowConfirm']
-        const newAdd = data[i][1]['confirmAdd']
-        let item = [provinceName, nowConfirm, 
-        `<span  class='colorGrass'>↑${Math.ceil(newAdd / (newAdd + nowConfirm))}%</span>`]
-        d_list.push(item)
-      }
-
-      config = {data:d_list}
-    }
-    onMounted(()=>{
-        setData()
-        setInterval(() => {
-          setData()
-        }, 2000);
-      })
-
-    
-    return { config }
+const setData = async () => {
+  const { data } = await proxy.$http.get("/getCenterRight2");
+  config.data = [];
+  for (let i = 0; i < data.length; i++) {
+    const provinceName = data[i][0];
+    const nowConfirm = data[i][1]["nowConfirm"];
+    const newAdd = data[i][1]["confirmAdd"];
+    let item = [
+      provinceName,
+      nowConfirm,
+      `<span  class='colorGrass'>↑${newAdd}</span>`,
+    ];
+    config.data.push(item);
   }
-})
+};
+let timer = null;
+onMounted(() => {
+  setData();
+  timer = setInterval(() => {
+    setData();
+  }, 100000);
+});
+onUnmounted(() => {
+  clearInterval(timer);
+});
 </script>
 
 <style lang="scss" scoped>

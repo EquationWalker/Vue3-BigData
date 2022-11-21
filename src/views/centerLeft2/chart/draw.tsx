@@ -67,13 +67,14 @@ export default defineComponent({
     // 监听
     watch(
       () => props.cdata,
-      (val: any) => {
+      (newVal: any) => {
+        
         options = {
           showLegendSymbol: true,
           tooltip: {
             trigger: 'item',
             textStyle: {
-              fontSize: 14,
+              fontSize: 15,
               lineHeight: 22,
             },
             position: point => {
@@ -118,7 +119,7 @@ export default defineComponent({
           }],
           series: [
             {
-              name: '感染人数',
+              name: '累计确诊人数',
               type: 'map',
               aspectScale: 0.92, //长宽比
               zoom: 1.16, //缩放
@@ -156,10 +157,10 @@ export default defineComponent({
               },
               label: {
                 formatter: params => `${params.name}`,
-                show: false,
+                show: true,
                 position: 'insideRight',
                 textStyle: {
-                  fontSize: 14,
+                  fontSize: 12,
                   color: '#efefef',
                 },
                 emphasis: {
@@ -168,32 +169,33 @@ export default defineComponent({
                   },
                 },
               },
-              data: val,
-            },
-            {
-              type: 'effectScatter',
-              coordinateSystem: 'geo',
-              effectType: 'ripple',
-              legendHoverLink: false,
-              showEffectOn: 'render',
-              rippleEffect: {
-                period: 4,
-                scale: 2.5,
-                brushType: 'stroke',
-              },
-              zlevel: 1,
-              symbolSize: function (val) {
-                return val[2]/4 ; 
-            },
-              itemStyle: {
-                normal: {
-                  color: '#99FBFE',
-                  shadowBlur: 5,
-                  shadowColor: '#fff',
-                },
-              },
-              data: convertData(seriesData),
-            },
+              data: newVal
+            }
+
+            // {
+            //   type: 'effectScatter',
+            //   coordinateSystem: 'geo',
+            //   effectType: 'ripple',
+            //   legendHoverLink: false,
+            //   showEffectOn: 'render',
+            //   rippleEffect: {
+            //     period: 4,
+            //     scale: 2.5,
+            //     brushType: 'stroke',
+            //   },
+            //   zlevel: 1,
+            //   symbolSize: function (val) {
+            //     return val[2]/4 ; 
+            // },
+            //   itemStyle: {
+            //     normal: {
+            //       color: '#99FBFE',
+            //       shadowBlur: 5,
+            //       shadowColor: '#fff',
+            //     },
+            //   },
+            //   //data: convertData(seriesData),
+            // },
           ],
         }
       },

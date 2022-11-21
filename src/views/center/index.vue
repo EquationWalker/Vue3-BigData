@@ -8,7 +8,10 @@
       >
         <p class="ml-3 colorBlue fw-b">{{ item.title }}</p>
         <div>
-          <dv-digital-flop class="dv-dig-flop ml-1 mt-1 pl-3" :config="item.config" />
+          <dv-digital-flop
+            class="dv-dig-flop ml-1 mt-1 pl-3"
+            :config="item.config"
+          />
         </div>
       </div>
     </div>
@@ -17,185 +20,134 @@
         <span>
           <i class="iconfont icon-tongji2"></i>
         </span>
-        <span class="fs-xl text mx-2 mb-1">风险地区Top10</span>
+        <span class="fs-xl text mx-2 mb-1">高风险地区排行榜</span>
         <dv-scroll-ranking-board class="dv-scr-rank-board" :config="ranking" />
       </div>
-      <div class="percent">
+      <!-- <div class="percent">
         <div class="item bg-color-black">
           <span>今日任务通过率</span>
-          <chart
-            :tips="rate[0].tips"
-            :colorObj="rate[0].colorData"
-          />
+          <chart :tips="rate[0].tips" :colorObj="rate[0].colorData" />
         </div>
         <div class="item bg-color-black">
           <span>今日任务达标率</span>
-          <chart
-            :tips="rate[1].tips"
-            :colorObj="rate[1].colorData"
-          />
+          <chart :tips="rate[1].tips" :colorObj="rate[1].colorData" />
         </div>
         <div class="water">
           <dv-water-level-pond class="dv-wa-le-po" :config="water" />
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, reactive, onMounted } from 'vue'
-import Chart from '../center/chart/draw'
+<script lang="ts" setup>
+import { reactive, onMounted, onUnmounted, getCurrentInstance } from "vue";
+import Chart from "../center/chart/draw";
+const { proxy } = getCurrentInstance() as any;
+const strIdx = [
+  "localConfirmAdd",
+  "importedCase",
+  "deadAdd",
+  "noInfect",
+  "highRiskAreaNum",
+  "mediumRiskAreaNum",
+];
+const label = [
+  "新增本土确诊",
+  "新增境外",
+  "新增死亡",
+  "无症状",
+  "高风险地区",
+  "中风险地区",
+];
 
-export default defineComponent({
-  components: {
-    Chart
+
+const titleItem = reactive([]);
+
+// 初始化数据
+onMounted(() => {
+  setData();
+});
+
+const ranking = reactive({
+  data: [
+    {
+      name: "周口",
+      value: 55,
+    }
+  ],
+  carousel: "single",
+  unit: "个",
+});
+
+const water = reactive({
+  data: [24, 45],
+  shape: "roundRect",
+  formatter: "{value}%",
+  waveNum: 3,
+});
+
+const rate = reactive([
+  {
+    id: "centerRate1",
+    tips: 99,
+    colorData: {
+      textStyle: "#3fc0fb",
+      series: {
+        color: ["#00bcd44a", "transparent"],
+        dataColor: {
+          normal: "#03a9f4",
+          shadowColor: "#97e2f5",
+        },
+      },
+    },
   },
-  setup() {
-    // 下层数据
-    const titleDate = [
-      {
-        number: 1020,
-        text: '新增本土确诊'
+  {
+    id: "centerRate2",
+    tips: 40,
+    colorData: {
+      textStyle: "#67e0e3",
+      series: {
+        color: ["#faf3a378", "transparent"],
+        dataColor: {
+          normal: "#ff9800",
+          shadowColor: "#fcebad",
+        },
       },
-      {
-        number: 18,
-        text: '新增境外'
-      },
-      {
-        number: 4,
-        text: '新增无症状'
-      },
-      {
-        number: 71,
-        text: '新增确诊'
-      },
-      {
-        number: 949,
-        text: '现有确诊'
-      },
-      {
-        number: 811,
-        text: '累计死亡'
-      },
-    ]
-    const titleItem = reactive([])
+    },
+  },
+]);
 
-    // 初始化数据
-    onMounted(() => {
-      setData()
+// 设置数据
+const setData = async () => {
+  const { data } = await proxy.$http.get("/getTotal")
+  let rankData = await proxy.$http.get("/getHighRiskRank")
+  rankData = rankData.data
+  ranking.data.length = 0;
+  rankData.forEach(e=>{
+    ranking.data.push({
+      name:e['province'],
+      value:e['highRiskAreaNum']
     })
+  })
 
-    const ranking = reactive({
-      data: [
-        {
-          name: '周口',
-          value: 55
+  strIdx.forEach((e, idx)=>{
+    titleItem.push({
+      title: label[idx],
+      config: {
+        number: [data[e]],
+        toFixed: 0,
+        textAlign: "left",
+        content: "{nt}",
+        style: {
+          fontSize: 26,
         },
-        {
-          name: '南阳',
-          value: 120
-        },
-        {
-          name: '西峡',
-          value: 78
-        },
-        {
-          name: '驻马店',
-          value: 66
-        },
-        {
-          name: '新乡',
-          value: 80
-        },
-        {
-          name: '新乡2',
-          value: 80
-        },
-        {
-          name: '新乡3',
-          value: 80
-        },
-        {
-          name: '新乡4',
-          value: 80
-        },
-        {
-          name: '新乡5',
-          value: 80
-        },
-        {
-          name: '新乡6',
-          value: 80
-        }
-      ],
-      carousel: 'single',
-      unit: '人'
-    })
-
-    const water = reactive({
-      data: [24, 45],
-      shape: 'roundRect',
-      formatter: '{value}%',
-      waveNum: 3
-    })
-
-    const rate = reactive([
-      {
-        id: 'centerRate1',
-        tips: 99,
-        colorData: {
-          textStyle: '#3fc0fb',
-          series: {
-            color: ['#00bcd44a', 'transparent'],
-            dataColor: {
-              normal: '#03a9f4',
-              shadowColor: '#97e2f5'
-            }
-          }
-        }
       },
-      {
-        id: 'centerRate2',
-        tips: 40,
-        colorData: {
-          textStyle: '#67e0e3',
-          series: {
-            color: ['#faf3a378', 'transparent'],
-            dataColor: {
-              normal: '#ff9800',
-              shadowColor: '#fcebad'
-            }
-          }
-        }
-      }
-    ])
+    })
+  })
 
-    // 设置数据
-    const setData = () => {
-      titleDate.map(e => {
-        titleItem.push({
-          title: e.text,
-          config: {
-            number: [e.number],
-            toFixed: 1,
-            textAlign: 'left',
-            content: '{nt}',
-            style: {
-              fontSize: 26
-            }
-          }
-        })
-      })
-    }
-    return {
-      titleItem,
-      ranking,
-      water,
-      rate
-    }
-  }
-})
+
+};
 </script>
 
 <style lang="scss" scoped>
@@ -231,7 +183,7 @@ export default defineComponent({
     }
     .ranking {
       padding: 10px;
-      width: 59%;
+      width: 100%;
       .dv-scr-rank-board {
         height: 220px;
       }

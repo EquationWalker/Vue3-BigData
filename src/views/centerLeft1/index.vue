@@ -26,7 +26,7 @@
           </div>
           <p>
             <span> {{ item.text }} </span>
-            <span class="colorYellow">(人)</span>
+            <span class="colorYellow">(万人)</span>
           </p>
         </div>
       </div>
@@ -34,80 +34,53 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, onMounted, onUnmounted,  reactive } from 'vue'
-import Chart from './chart/index'
-export default defineComponent({
-  components: {
-    Chart
-  },
-  setup() {
-    // 下层数据
-    const dataArr = [
-      {
-        number: 150,
-        text: '累计确诊'
-      },
-      {
-        number: 144,
-        text: '新增确诊'
-      },
-      {
-        number: 361,
-        text: '累计死亡'
-      },
-      {
-        number: 571,
-        text: '累计治愈'
-      }
-    ]
-    // 对应图标
-    const iconFont = [
-      'icon-diagnose',
-      'icon-monitoring',
-      'icon-cloudupload',
-      'icon-clouddownload'
-    ]
-    const numberData = reactive([])
-    let intervalInstance = null
-    onMounted(() => {
-      setData()
-      changeTiming()
-    })
+<script lang="ts" setup>
+import {
+  onMounted,
+  onUnmounted,
+  reactive,
+  getCurrentInstance,
+} from "vue";
+import Chart from "./chart/index";
+const iconFont = [
+  "icon-diagnose",
+  "icon-monitoring",
+  "icon-cloudupload",
+  "icon-clouddownload",
+];
+const numberData = reactive([]);
+let intervalInstance = null;
+onMounted(() => {
+  setData();
+  changeTiming();
+});
 
-    const setData = () => {
-      dataArr.forEach(e => {
-        numberData.push({
-          config: {
-            number: [e.number],
-            toFixed: 1,
-            content: '{nt}',
-            style: {
-              fontSize: 24
-            }
-          },
-          text: e.text
-        })
-      })
-    }
+const { proxy } = getCurrentInstance() as any;
+const strIdx = ["localConfirmAdd", "confirm", "heal", "dead"];
+const label = ["新增确诊", "累计确诊", "累计治愈", "累计死亡"];
+const setData = async () => {
+  const { data } = await proxy.$http.get("/getTotal");
+  numberData.length = 0;
+  strIdx.forEach((e, idx) => {
+    numberData.push({
+      config: {
+        number: [data[e] / 10000],
+        toFixed: 1,
+        content: "{nt}",
+        style: {
+          fontSize: 24,
+        },
+      },
+      text: label[idx],
+    });
+  });
+};
 
-    const changeTiming = () => {
-      intervalInstance = setInterval(() => {
-        changeNumber()
-      }, 2000)
-    }
-    const changeNumber = () => {
-      numberData.forEach((item, index) => {
-        item.config.number[0] += ++index
-        item.config = { ...item.config }
-      })
-    }
-    onUnmounted(() => {
-      clearInterval(intervalInstance)   
-    })
-
-    return { numberData, iconFont}
-  }
+const changeTiming = () => {
+  intervalInstance = setInterval(setData, 5000);
+}
+onUnmounted(() => {
+  clearInterval(intervalInstance);
 })
 </script>
 

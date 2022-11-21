@@ -1,4 +1,4 @@
-import { defineComponent, onUnmounted, reactive } from 'vue'
+import { defineComponent,onMounted, onUnmounted, reactive, getCurrentInstance } from 'vue'
 import Draw from './draw'
 
 export default defineComponent({
@@ -8,22 +8,33 @@ export default defineComponent({
   setup() {
     let intervalInstance = null
     const cdata = reactive({
-      xData: ['本土确诊', '新增境外', '无症状', '新增确诊', '现有确诊', '累计死亡'],
+      xData: ['新增确诊', '累计治愈',  '累计确诊',  '累计死亡'],
       seriesData: [
-        { value: 10, name: '本土确诊' },
-        { value: 5, name: '新增境外' },
-        { value: 15, name: '无症状' },
-        { value: 25, name: '确诊' },
-        { value: 20, name: '现有确诊' },
-        { value: 35, name: '累计死亡' },
+        // { value: 10, name: '新增确诊' },
+        // { value: 10, name: '新增境外' },
+        // { value: 5, name: '累计治愈' },
+        // { value: 15, name: '累计确诊' },
+        // { value: 35, name: '累计死亡' },
       ],
     })
-    intervalInstance = setInterval(() => {
-      const data = cdata.seriesData
-      cdata.seriesData = data.map((e) => {
-        return { value: e.value + 10, name: e.name }
-      })
-    }, 1000)
+
+    const {proxy} = getCurrentInstance() as any
+
+    const setData = async () => {
+
+      const {data} = await proxy.$http.get("/getTotal")
+      
+      cdata.seriesData = [
+        { value: data['localConfirmAdd'], name: '新增确诊' },
+        { value: data['heal'], name: '累计治愈' },
+        { value: data['local_acc_confirm'], name: '累计确诊' },
+        { value: data['dead'], name: '累计死亡' },
+      ]
+    }
+    onMounted(() => {
+      setData()
+      intervalInstance = setInterval(setData, 10000)
+    })
 
     onUnmounted(() => {
       clearInterval(intervalInstance)
@@ -35,5 +46,5 @@ export default defineComponent({
         </div>
       )
     }
-  },
+  }
 })

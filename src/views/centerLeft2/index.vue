@@ -17,14 +17,8 @@
   </div>
 </template>
 
-<script lang='ts'>
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
 import Chart from './chart/index'
-export default defineComponent({
-  components: {
-    Chart
-  }
-})
 </script>
 
 <style lang="scss" scoped>

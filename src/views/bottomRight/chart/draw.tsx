@@ -114,7 +114,7 @@ export default defineComponent({
             itemGap: 15,
             itemWidth: 12,
             itemHeight: 12,
-            data: ["平均指标", "我的指标"],
+            data: ["平均接种量", "累计接种量"],
             textStyle: {
               color: "#fff",
               fontSize: 14
@@ -224,7 +224,7 @@ export default defineComponent({
               data: [
                 {
                   value: val.radarDataAvg[6],
-                  name: "平均指标",
+                  name: "平均接种量",
                   itemStyle: {
                     normal: {
                       color: "#f8d351"
@@ -248,7 +248,7 @@ export default defineComponent({
                 },
                 {
                   value: val.radarData[6],
-                  name: "我的指标",
+                  name: "累计接种量",
                   itemStyle: {
                     normal: {
                       color: "#43dfa2"

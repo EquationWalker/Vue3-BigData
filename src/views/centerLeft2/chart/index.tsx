@@ -1,4 +1,5 @@
-import { defineComponent, onMounted, onUnmounted, reactive } from 'vue'
+import { defineComponent, onMounted, onUnmounted, reactive,
+getCurrentInstance } from 'vue'
 import Draw from './draw'
 
 export default defineComponent({
@@ -6,49 +7,29 @@ export default defineComponent({
     Draw
   },
   setup() {
-    const cdata = reactive([
-      {
-        name: '济南市',
-        value:10
-      },
-      {
-        name: '青岛市',
-        value:8
-      },
-      {
-        name: '烟台市',
-        value:10
-      },
-      {
-        name: '临沂市',
-        value:10
-      },
-      {
-        name: '日照市',
-        value:10
-      },
-      {
-        name: '济南市',
-        value:10
-      },
-      {
-        name: '泰安市',
-        value:10
-      },
-      {
-        name: '德州市',
-        value:10
-      },
-    ])
+    const cdata = reactive([])
+    const {proxy} = getCurrentInstance() as any
+
+    const setData = async () => {
+      const {data} = await proxy.$http.get('/getLocalProvince')
+      cdata.length = 0
+      data.forEach((e)=>{
+        if (e['name'] == "地区待确认" || e['name'] == "境外输入") return
+        cdata.push({
+          name:e['name'] + "市", 
+          value:e['total']['confirm']
+        })
+      })
+
+      console.log(cdata)
+
+    }
 
     let timer = null
     onMounted(()=>{
-      timer = setInterval(()=>{
-        cdata.forEach((e)=>{
-          e.value = Math.random();
-        }, 1000)
+      setData()
+      timer = setInterval(setData, 3000)
       })
-    })
 
     onUnmounted(()=>{
       clearInterval(timer)
