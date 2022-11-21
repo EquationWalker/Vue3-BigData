@@ -1,4 +1,5 @@
-import { defineComponent, reactive, onMounted, ref, onUnmounted } from 'vue';
+import { defineComponent, reactive, onMounted, ref, onUnmounted
+, getCurrentInstance} from 'vue';
 import Draw from './draw'
 
 export default defineComponent({
@@ -17,8 +18,11 @@ export default defineComponent({
       weekLineData: []
     })
 
+    const {proxy} = getCurrentInstance() as any
     // methods
-    const setData = () => {
+    const setData = async () => {
+
+      const {data} = await proxy.$http.get('/getBottomRight')
       // 清空轮询数据
       cdata.weekCategory = [];
       cdata.weekMaxData = [];
@@ -31,11 +35,10 @@ export default defineComponent({
       // 周数据
       for (let i = 0; i < 7; i++) {
         // 日期
-        const date = new Date();
-        cdata.weekCategory.unshift([date.getMonth() + 1, date.getDate() - i].join("/"));
-
+        
+        cdata.weekCategory.push(data[i]['date'])
         // 折线图数据
-        cdata.weekMaxData.push(cdata.maxData);
+        cdata.weekMaxData.push(data[i]['total_vaccinations_per_hundred']);
         const distance = Math.round(Math.random() * 11000 + 500);
         cdata.weekLineData.push(distance);
 

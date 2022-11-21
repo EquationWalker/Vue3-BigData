@@ -10,9 +10,19 @@ import './assets/icon/iconfont.css'
 // 引入 全局注册组件
 import PublicComponent from '@/components/componentInstall';
 
+import axios from 'axios'
+
+axios.defaults.baseURL = 'http://127.0.0.1:5000'
+
 const app = createApp(App)
+app.config.globalProperties.$http = axios
 app.use(PublicComponent)
 app.use(dataV)
 app.use(store)
 app.use(router)
+
 app.mount('#app')
+
+
+
+

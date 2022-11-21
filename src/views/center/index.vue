@@ -17,7 +17,7 @@
         <span>
           <i class="iconfont icon-tongji2"></i>
         </span>
-        <span class="fs-xl text mx-2 mb-1">年度负责人组件达标榜</span>
+        <span class="fs-xl text mx-2 mb-1">风险地区Top10</span>
         <dv-scroll-ranking-board class="dv-scr-rank-board" :config="ranking" />
       </div>
       <div class="percent">
@@ -56,27 +56,27 @@ export default defineComponent({
     const titleDate = [
       {
         number: 1020,
-        text: '今年累计任务建次数'
+        text: '新增本土确诊'
       },
       {
         number: 18,
-        text: '本月累计任务次数'
+        text: '新增境外'
       },
       {
         number: 4,
-        text: '今日累计任务次数'
+        text: '新增无症状'
       },
       {
         number: 71,
-        text: '今年失败任务次数'
+        text: '新增确诊'
       },
       {
         number: 949,
-        text: '今年失败成功次数'
+        text: '现有确诊'
       },
       {
         number: 811,
-        text: '今年达标任务个数'
+        text: '累计死亡'
       },
     ]
     const titleItem = reactive([])

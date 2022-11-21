@@ -6,7 +6,7 @@
           <i class="iconfont icon-tongji4" />
         </span>
         <div class="d-flex">
-          <span class="fs-xl text mx-2">任务通过率</span>
+          <span class="fs-xl text mx-2">数据统计</span>
           <dv-decoration-3 class="dv-dec-3" />
         </div>
       </div>
@@ -26,7 +26,7 @@
           </div>
           <p>
             <span> {{ item.text }} </span>
-            <span class="colorYellow">(件)</span>
+            <span class="colorYellow">(人)</span>
           </p>
         </div>
       </div>
@@ -46,19 +46,19 @@ export default defineComponent({
     const dataArr = [
       {
         number: 150,
-        text: '今日构建总量'
+        text: '累计确诊'
       },
       {
         number: 144,
-        text: '总共完成数量'
+        text: '新增确诊'
       },
       {
         number: 361,
-        text: '正在编译数量'
+        text: '累计死亡'
       },
       {
         number: 571,
-        text: '未通过数量'
+        text: '累计治愈'
       }
     ]
     // 对应图标

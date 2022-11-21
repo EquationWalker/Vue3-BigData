@@ -16,43 +16,39 @@ export default defineComponent({
     let options = shallowReactive({showLegendSymbol:null,tooltip:null,geo:null,series:null})
     // 设置点的位置(经纬度)
     const geoCoordMap = {
-      厦门市: [118.11022, 24.490474, 20],
-      福州市: [119.206239, 26.275302, 20],
-      泉州市: [118.589421, 24.908853, 20],
-      漳州市: [117.561801, 24.510897, 20],
-      龙岩市: [116.82978, 25.391603, 20],
-      莆田市: [119.007558, 25.591011, 20],
-      三明市: [117.435001, 26.465444, 20],
-      南平市: [118.178459, 27.535627, 20],
-      宁德市: [119.527082, 27.15924, 20],
+      济南市: [117.120083,36.652989, 20],
+      青岛市: [120.388516,36.075735, 20],
+      烟台市: [121.432217,37.466132, 20],
+      临沂市: [118.367031,35.065966, 20],
+      日照市: [119.52179,35.411679, 20],
+      济宁市: [116.577454,35.400486, 20],
+      泰安市: [117.110291,36.180246, 20],
+      德州市: [116.368714,37.429304, 20],
     }
     const seriesData = [
       {
-        name: '厦门市',
+        name: '济南市',
       },
       {
-        name: '福州市',
+        name: '青岛市',
       },
       {
-        name: '泉州市',
+        name: '烟台市',
       },
       {
-        name: '漳州市',
+        name: '临沂市',
       },
       {
-        name: '龙岩市',
+        name: '日照市',
       },
       {
-        name: '莆田市',
+        name: '济南市',
       },
       {
-        name: '三明市',
+        name: '泰安市',
       },
       {
-        name: '南平市',
-      },
-      {
-        name: '宁德市',
+        name: '德州市',
       },
     ]
     const convertData = function (data) {
@@ -107,9 +103,9 @@ export default defineComponent({
             show: true,
             aspectScale: 0.85, //长宽比
             zoom: 1.16,
-            top: '10%',
+            bottom: '10%',
             left: '17%',
-            map: '福建',
+            map: 'China',
             roam: false,
             itemStyle: {
               normal: {
@@ -122,13 +118,13 @@ export default defineComponent({
           }],
           series: [
             {
-              name: '相关指数',
+              name: '感染人数',
               type: 'map',
-              aspectScale: 0.85, //长宽比
+              aspectScale: 0.92, //长宽比
               zoom: 1.16, //缩放
-              mapType: '福建', // 自定义扩展图表类型
-              top: '9%',
-              left: '16%',
+              mapType: 'China', // 自定义扩展图表类型
+              bottom: '6%',
+              left: '6%',
               itemStyle: {
                 normal: {
                   // 背景渐变色
@@ -160,7 +156,7 @@ export default defineComponent({
               },
               label: {
                 formatter: params => `${params.name}`,
-                show: true,
+                show: false,
                 position: 'insideRight',
                 textStyle: {
                   fontSize: 14,
@@ -177,7 +173,6 @@ export default defineComponent({
             {
               type: 'effectScatter',
               coordinateSystem: 'geo',
-              symbolSize: 7,
               effectType: 'ripple',
               legendHoverLink: false,
               showEffectOn: 'render',
@@ -187,6 +182,9 @@ export default defineComponent({
                 brushType: 'stroke',
               },
               zlevel: 1,
+              symbolSize: function (val) {
+                return val[2]/4 ; 
+            },
               itemStyle: {
                 normal: {
                   color: '#99FBFE',

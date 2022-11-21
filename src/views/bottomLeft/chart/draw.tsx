@@ -80,7 +80,7 @@ export default defineComponent({
           ],
           series: [
             {
-              name: "贯通率",
+              name: "治愈率",
               type: "line",
               smooth: true,
               showAllSymbol: true,
@@ -95,7 +95,7 @@ export default defineComponent({
               data: val.rateData
             },
             {
-              name: "已贯通",
+              name: "累计治愈",
               type: "bar",
               barWidth: 10,
               itemStyle: {
@@ -110,7 +110,7 @@ export default defineComponent({
               data: val.barData
             },
             {
-              name: "计划贯通",
+              name: "累计确诊",
               type: "bar",
               barGap: "-100%",
               barWidth: 10,
