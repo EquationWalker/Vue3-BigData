@@ -21,7 +21,7 @@ import { reactive, getCurrentInstance, onMounted, onUnmounted } from "vue";
 const config = reactive({
   header: ["省份", "总计", "新增"],
   data: [],
-  //rowNum: 7, //表格行数
+  rowNum: 7, //表格行数
   waitTime: 2000,
   carousel: "page",
   headerHeight: 35,
@@ -54,7 +54,7 @@ onMounted(() => {
   setData();
   timer = setInterval(() => {
     setData();
-  }, 100000);
+  }, 8000);
 });
 onUnmounted(() => {
   clearInterval(timer);
@@ -63,7 +63,7 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 $box-height: 410px;
-$box-width: 362px;  // 300
+$box-width: 382px;  // 300
 .centerRight2 {
   padding: 16px;
   padding-top: 20px;
@@ -81,7 +81,7 @@ $box-width: 362px;  // 300
     border-radius: 10px;
     overflow: hidden;
     .dv-scr-board {
-      width: 350px; // 270
+      width: 355px; // 270
       height: 340px;
     }
   }

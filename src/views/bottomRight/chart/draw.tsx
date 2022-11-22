@@ -154,19 +154,19 @@ export default defineComponent({
             },
             indicator: [
               {
-                name: "服务态度",
+                name: "接种人数",
                 max: val.maxData
               },
               {
-                name: "产品质量",
+                name: "未接种人数",
                 max: 10
               },
               {
-                name: "任务效率",
+                name: "接种感染",
                 max: 12
               },
               {
-                name: "售后保障",
+                name: "未接种感染",
                 max: 3.5
               }
             ]

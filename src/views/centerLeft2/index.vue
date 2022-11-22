@@ -6,7 +6,7 @@
           <i class="iconfont icon-layer-group" />
         </span>
         <div class="d-flex">
-          <span class="fs-xl text mx-2">地图数据</span>
+          <span class="fs-xl text mx-2">山东疫情地图</span>
           <dv-decoration-1 class="dv-dec-1" />
         </div>
       </div>
@@ -23,7 +23,7 @@ import Chart from './chart/index'
 
 <style lang="scss" scoped>
 .centreLeft1 {
-  $box-width: 600px;  // 300
+  $box-width: 480px;  // 300
   $box-height: 410px;
   padding: 16px;
   height: $box-height;

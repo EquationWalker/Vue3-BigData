@@ -1,4 +1,4 @@
-import { defineComponent, watch, shallowReactive, nextTick, ref, onUnmounted } from 'vue';
+import { defineComponent, watch, reactive } from 'vue';
 
 // 声明类型
 const PropsType = {
@@ -13,63 +13,48 @@ export default defineComponent({
   props: PropsType,
   setup(props) {
     // 配置项
-    let options = shallowReactive({showLegendSymbol:null,tooltip:null,geo:null,series:null})
+    let options = reactive({})
     // 设置点的位置(经纬度)
     const geoCoordMap = {
-      济南市: [117.120083,36.652989, 20],
-      青岛市: [120.388516,36.075735, 20],
-      烟台市: [121.432217,37.466132, 20],
-      临沂市: [118.367031,35.065966, 20],
-      日照市: [119.52179,35.411679, 20],
-      济宁市: [116.577454,35.400486, 20],
-      泰安市: [117.110291,36.180246, 20],
-      德州市: [116.368714,37.429304, 20],
+      济南市: [36.650061, 117.113634],
+      青岛市: [36.066351, 122.384024],
+      烟台市: [37.260191, 123.248854],
+      威海市: [37.624071,125.14396],
+      东营市: [38.132243, 119.689012],
+      淄博市: [36.508246, 118.776947],
+      潍坊市: [36.990464, 120.16892],
+      日照市: [35.194396, 120.532912],
+      菏泽市: [34.82303, 115.494009],
+      枣庄市: [33.804525, 118.113965],
+      德州市: [37.422241, 116.354988],
+      滨州市: [38.477755, 118.478949],
+      临沂市: [35.097131, 119.35694],
+      济宁市: [35.137314, 116.613982],
+      聊城市: [36.248727, 115.569998],
+      泰安市: [35.989288, 117.096971],
     }
-    const seriesData = [
-      {
-        name: '济南市',
-      },
-      {
-        name: '青岛市',
-      },
-      {
-        name: '烟台市',
-      },
-      {
-        name: '临沂市',
-      },
-      {
-        name: '日照市',
-      },
-      {
-        name: '济南市',
-      },
-      {
-        name: '泰安市',
-      },
-      {
-        name: '德州市',
-      },
-    ]
-    const convertData = function (data) {
+    const seriesData = Object.keys(geoCoordMap)
+    const convertData = function (data: any) {
       const scatterData = [];
       for (let i = 0; i < data.length; i++) {
-        const geoCoord = geoCoordMap[data[i].name];
+        const geoCoord = geoCoordMap[data[i]];
+        console.log([geoCoord[1], geoCoord[0], 20])
         if (geoCoord) {
           scatterData.push({
-            name: data[i].name,
-            value: geoCoord.concat(data[i].value),
+            name: data[i],
+            value: [geoCoord[1], geoCoord[0]],
           });
         }
       }
+      //console.log(scatterData)
       return scatterData;
     }
     // 监听
     watch(
       () => props.cdata,
       (newVal: any) => {
-        
-        options = {
+
+        options = reactive({
           showLegendSymbol: true,
           tooltip: {
             trigger: 'item',
@@ -170,34 +155,35 @@ export default defineComponent({
                 },
               },
               data: newVal
-            }
+            },
 
-            // {
-            //   type: 'effectScatter',
-            //   coordinateSystem: 'geo',
-            //   effectType: 'ripple',
-            //   legendHoverLink: false,
-            //   showEffectOn: 'render',
-            //   rippleEffect: {
-            //     period: 4,
-            //     scale: 2.5,
-            //     brushType: 'stroke',
-            //   },
-            //   zlevel: 1,
-            //   symbolSize: function (val) {
-            //     return val[2]/4 ; 
-            // },
-            //   itemStyle: {
-            //     normal: {
-            //       color: '#99FBFE',
-            //       shadowBlur: 5,
-            //       shadowColor: '#fff',
-            //     },
-            //   },
-            //   //data: convertData(seriesData),
-            // },
+            {
+              type: 'effectScatter',
+              coordinateSystem: 'geo',
+              effectType: 'ripple',
+              legendHoverLink: false,
+              showEffectOn: 'render',
+              rippleEffect: {
+                period: 4,
+                scale: 2.5,
+                brushType: 'stroke',
+              },
+              zlevel: 1,
+              symbolSize: function (val) {
+                console.log('val', val)
+                return Math.ceil(Math.random() * 25);
+              },
+              itemStyle: {
+                normal: {
+                  color: '#99FBFE',
+                  shadowBlur: 5,
+                  shadowColor: '#fff',
+                },
+              },
+              data: convertData(seriesData),
+            },
           ],
-        }
+        })
       },
       {
         immediate: true,

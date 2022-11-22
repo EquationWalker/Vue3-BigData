@@ -47,7 +47,7 @@ export default defineComponent({
       setData()
       timerInstance = setInterval(()=>{
         setData()
-      }, 3000)
+      }, 6000)
     })
 
     onUnmounted(() => {clearInterval(timerInstance)})

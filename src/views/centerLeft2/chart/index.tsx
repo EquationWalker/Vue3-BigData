@@ -7,7 +7,10 @@ export default defineComponent({
     Draw
   },
   setup() {
-    const cdata = reactive([])
+    const cdata = reactive([{
+      name:"青岛市",
+      value:1227
+    }])
     const {proxy} = getCurrentInstance() as any
 
     const setData = async () => {
@@ -21,14 +24,14 @@ export default defineComponent({
         })
       })
 
-      console.log(cdata)
+      //console.log(cdata)
 
     }
 
     let timer = null
     onMounted(()=>{
       setData()
-      timer = setInterval(setData, 3000)
+      timer = setInterval(setData, 6000)
       })
 
     onUnmounted(()=>{

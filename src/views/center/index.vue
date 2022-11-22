@@ -70,12 +70,7 @@ onMounted(() => {
 });
 
 const ranking = reactive({
-  data: [
-    {
-      name: "周口",
-      value: 55,
-    }
-  ],
+  data: [],
   carousel: "single",
   unit: "个",
 });
@@ -154,7 +149,7 @@ const setData = async () => {
 .center {
   display: flex;
   flex-direction: column;
-  min-width: 520px;
+  min-width: 550px;
   .up {
     width: 100%;
     display: flex;

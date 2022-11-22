@@ -85,7 +85,7 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-$box-width: 400px; // 300
+$box-width: 360px; // 300
 $box-height: 410px;
 
 .centreLeft1 {

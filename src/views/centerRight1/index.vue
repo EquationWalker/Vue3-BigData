@@ -25,53 +25,14 @@ const config = reactive({
       name: "南阳",
       value: 167,
     },
-    {
-      name: "周口",
-      value: 67,
-    },
-    {
-      name: "漯河",
-      value: 123,
-    },
-    {
-      name: "郑州",
-      value: 55,
-    },
-    {
-      name: "西峡",
-      value: 98,
-    },
-    {
-      name: "西峡",
-      value: 98,
-    },
-    {
-      name: "西峡",
-      value: 98,
-    },
-    {
-      name: "郑州",
-      value: 55,
-    },
-    {
-      name: "西峡",
-      value: 98,
-    },
-    {
-      name: "郑州",
-      value: 55,
-    },
-    {
-      name: "西峡",
-      value: 98,
-    },
+   
   ]
 });
 </script>
 
 <style lang="scss" scoped>
 $box-height: 400px;
-$box-width: 340px;
+$box-width: 400px;  //340
 .centerRight1 {
   padding: 5px;
   height: $box-height;
